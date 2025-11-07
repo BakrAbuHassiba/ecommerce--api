@@ -1,0 +1,8 @@
+# Ignore huge npm libraires
+node_modules/
+
+# Ignore the secret configurations
+config.env
+
+# Ignore the uploads folder
+uploads/

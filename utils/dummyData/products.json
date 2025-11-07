@@ -1,0 +1,122 @@
+[
+  {
+    "title": "Men's Casual Shirt",
+    "slug": "mens-casual-shirt",
+    "description": "Comfortable and stylish casual shirt for men",
+    "quantity": 120,
+    "sold": 65,
+    "price": 29.99,
+    "colors": ["blue", "white", "grey"],
+    "averageRating": 4.7,
+    "numOfRatings": 200,
+    "category": "66f42954d33cce5481be8eac"
+  },
+  {
+    "title": "iphone 15",
+    "slug": "iphone-15",
+    "description": "Latest iphone with a 108MP camera",
+    "quantity": 80,
+    "sold": 55,
+    "price": 699.99,
+    "colors": ["black", "silver", "gold"],
+    "averageRating": 4.5,
+    "numOfRatings": 150,
+    "category": "66eb098f98e6b9b50c402f74"
+  },
+  {
+    "title": "Gaming Laptop",
+    "slug": "gaming-laptop",
+    "description": "High-performance laptop designed for gaming",
+    "quantity": 50,
+    "sold": 25,
+    "price": 1299.99,
+    "colors": ["black"],
+    "averageRating": 4.8,
+    "numOfRatings": 100,
+    "category": "66f4303ed6d550f03b1ef93a"
+  },
+  {
+    "title": "Women's Dress",
+    "slug": "womens-dress",
+    "description": "Elegant summer dress perfect for casual outings",
+    "quantity": 90,
+    "sold": 70,
+    "price": 54.99,
+    "colors": ["red", "green"],
+    "averageRating": 4.6,
+    "numOfRatings": 180,
+    "category": "66f42954d33cce5481be8eac"
+  },
+  {
+    "title": "Wireless Earbuds",
+    "slug": "wireless-earbuds",
+    "description": "Bluetooth wireless earbuds with noise cancellation",
+    "quantity": 150,
+    "sold": 140,
+    "price": 89.99,
+    "colors": ["white", "black"],
+    "averageRating": 4.4,
+    "numOfRatings": 250,
+    "category": "66c4e80f0e9b18847c286c2e"
+  },
+  {
+    "title": "Men's Hoodie",
+    "slug": "mens-hoodie",
+    "description": "Warm and trendy hoodie for men",
+    "quantity": 75,
+    "sold": 30,
+    "price": 39.99,
+    "colors": ["navy", "grey"],
+    "averageRating": 4.3,
+    "numOfRatings": 95,
+    "category": "66f42954d33cce5481be8eac"
+  },
+  {
+    "title": "Tablet Pro",
+    "slug": "tablet-pro",
+    "description": "Versatile tablet with stylus support",
+    "quantity": 60,
+    "sold": 40,
+    "price": 499.99,
+    "colors": ["black", "white"],
+    "averageRating": 4.5,
+    "numOfRatings": 130,
+    "category": "66c4e80f0e9b18847c286c2e"
+  },
+  {
+    "title": "Women's Sports Shoes",
+    "slug": "womens-sports-shoes",
+    "description": "Lightweight sports shoes for women",
+    "quantity": 100,
+    "sold": 85,
+    "price": 59.99,
+    "colors": ["pink", "purple"],
+    "averageRating": 4.6,
+    "numOfRatings": 140,
+    "category": "66f42954d33cce5481be8eac"
+  },
+  {
+    "title": "Bluetooth Speakers",
+    "slug": "bluetooh-speakers",
+    "description": "Portable Bluetooth speakers with rich sound",
+    "quantity": 200,
+    "sold": 180,
+    "price": 49.99,
+    "colors": ["blue", "black"],
+    "averageRating": 4.8,
+    "numOfRatings": 300,
+    "category": "66c4e80f0e9b18847c286c2e"
+  },
+  {
+    "title": "Men's Jeans",
+    "slug": "mens-jeans",
+    "description": "Classic fit jeans for everyday wear",
+    "quantity": 110,
+    "sold": 60,
+    "price": 44.99,
+    "colors": ["denim", "black"],
+    "averageRating": 4.4,
+    "numOfRatings": 100,
+    "category": "66f42954d33cce5481be8eac"
+  }
+]
