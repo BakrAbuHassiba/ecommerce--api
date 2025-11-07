@@ -38,8 +38,8 @@ const app = express();
 
 // // Enable Cross-Origin Resource Sharing
 const corsOptions = {
-  origin: "https://ali-mahmoud24.github.io/react-ecommerce/",
-  credentials: true, // use cookies/auth
+  origin: "https://ali-mahmoud24.github.io", //  only the origin, no path or slash
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
