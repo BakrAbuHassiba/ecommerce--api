@@ -32,17 +32,15 @@ dbConnection();
 const app = express();
 
 // Middlewares
-
-// app.use(cors());
-// app.options('*', cors());
-
-// // Enable Cross-Origin Resource Sharing
 const corsOptions = {
-  origin: "https://ali-mahmoud24.github.io", //  only the origin, no path or slash
-  credentials: true,
+  origin: process.env.FRONTEND_URL || "http://localhost:5173", // frontend domain
+  credentials: true, // allow sending cookies
 };
 
+// Enable CORS for all routes
 app.use(cors(corsOptions));
+
+// Handle preflight OPTIONS requests for all routes
 app.options("*", cors(corsOptions));
 
 // Compress Response size

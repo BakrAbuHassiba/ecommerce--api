@@ -6,8 +6,8 @@ const sendToken = (user, statusCode, res) => {
 
   const cookieOptions = {
     httpOnly: true, // JS can't access cookie (XSS safe)
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production", // HTTPS only in production
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // cross-origin in prod
     expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
   };
 
