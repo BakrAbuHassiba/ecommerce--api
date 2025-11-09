@@ -11,6 +11,7 @@ const factory = require('./handlerFactory');
 const OrderModel = require('../models/orderModel');
 const CartModel = require('../models/cartModel');
 const ProductModel = require('../models/productModel');
+const UserModel = require('../models/userModel');
 
 // Middlewares
 
