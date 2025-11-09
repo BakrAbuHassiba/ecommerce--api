@@ -137,6 +137,71 @@ const checkoutSession = asyncHandler(async (req, res, next) => {
   res.status(200).json({ status: 'success', url: session.url, session });
 });
 
+const createCardOrder = async (session) => {
+  try {
+    const cartId = session.client_reference_id;
+    const shippingAddress = session.metadata;
+    const orderPrice = session.amount_total / 100;
+
+    // 1) Get cart & user
+    const cart = await CartModel.findById(cartId);
+    const user = await UserModel.findOne({ email: session.customer_email });
+
+    if (!cart || !user) return;
+
+    // 2) Create Order
+    const order = await OrderModel.create({
+      user: user._id,
+      cartItems: cart.cartItems,
+      shippingAddress,
+      totalOrderPrice: orderPrice,
+      isPaid: true,
+      paidAt: Date.now(),
+      paymentMethodType: 'card',
+    });
+
+    // 3) Update Product Stock
+    if (order) {
+      const bulkOption = cart.cartItems.map((item) => ({
+        updateOne: {
+          filter: { _id: item.product },
+          update: { $inc: { quantity: -item.quantity, sold: +item.quantity } },
+        },
+      }));
+      await ProductModel.bulkWrite(bulkOption);
+
+      // 4) Clear cart
+      await CartModel.findByIdAndDelete(cartId);
+    }
+  } catch (err) {
+    console.error('Error creating card order:', err.message);
+  }
+};
+
+// @desc    Stripe webhook for successful payments
+// @route   POST /webhook-checkout
+// @access  Public
+const webhookCheckout = asyncHandler(async (req, res, next) => {
+  const sig = req.headers['stripe-signature'];
+
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch (err) {
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  if (event.type === 'checkout.session.completed') {
+    createCardOrder(event.data.object);
+  }
+
+  res.status(200).json({ received: true });
+});
+
 // @desc Get all Orders
 // @route POST /api/v2/orders
 // @access Protect/User-Admin
@@ -192,6 +257,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res, next) => {
 module.exports = {
   createCashOrder,
   checkoutSession,
+  webhookCheckout,
   getOrders,
   filterOrderForLoggedUsers,
   getOrderById,

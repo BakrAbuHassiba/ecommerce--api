@@ -3,6 +3,7 @@ const express = require('express');
 const {
   createCashOrder,
   checkoutSession,
+  webhookCheckout,
   getOrders,
   getOrderById,
   filterOrderForLoggedUsers,
@@ -13,6 +14,12 @@ const {
 const { protect, allowedTo } = require('../services/authService');
 
 const router = express.Router();
+
+router.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  webhookCheckout
+);
 
 router.use(protect);
 
