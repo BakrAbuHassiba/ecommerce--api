@@ -79,7 +79,10 @@ const checkoutSession = asyncHandler(async (req, res, next) => {
   const shippingPrice = 0;
 
   // 1) Get cart depend on cartId
-  const cart = await CartModel.findById(req.params.cartId);
+  const cart = await CartModel.findById(req.params.cartId).populate({
+    path: 'cartItems.product',
+    select: 'title price priceAfterDiscount imageCover',
+  });
   if (!cart) {
     return next(
       new APIError(`No such cart with id: ${req.params.cartId}`, 404)
@@ -93,28 +96,44 @@ const checkoutSession = asyncHandler(async (req, res, next) => {
 
   const totalOrderPrice = cartPrice + taxPrice + shippingPrice;
 
-  // 3) Create stripe checkout session
-  const session = await stripe.checkout.sessions.create({
-    line_items: [
-      {
-        price_data: {
-          currency: 'egp',
-          unit_amount: totalOrderPrice * 100,
-          product_data: { name: req.user.name },
+  // 3) Build Stripe line items dynamically from cart
+
+  const lineItems = cart.cartItems.map((item) => {
+    const { product } = item;
+
+    console.log(product);
+
+    return {
+      price_data: {
+        currency: 'egp',
+        unit_amount: Math.round(
+          (product.priceAfterDiscount || product.price) * 100
+        ), // convert EGP → piasters
+        product_data: {
+          name: product.title,
+          // description: `Quantity: ${item.quantity}`,
+          images: product.imageCoverUrl ? [product.imageCoverUrl] : [],
         },
-        quantity: 1,
       },
-    ],
-    currency: 'egp',
+      quantity: item.quantity,
+    };
+  });
+
+  // 4) Create stripe checkout session
+  const session = await stripe.checkout.sessions.create({
+    line_items: lineItems,
     mode: 'payment',
     success_url: `${req.protocol}://${req.get('host')}/orders`,
     cancel_url: `${req.protocol}://${req.get('host')}/cart`,
     customer_email: req.user.email,
     client_reference_id: req.params.cartId,
-    metadata: req.body.shippingAddress,
+    metadata: {
+      shippingAddress: JSON.stringify(req.body.shippingAddress || {}),
+      totalPrice: totalOrderPrice.toFixed(2),
+    },
   });
 
-  // 4) send Session to response
+  // 5) send Session to response
   res.status(200).json({ status: 'success', url: session.url, session });
 });
 
