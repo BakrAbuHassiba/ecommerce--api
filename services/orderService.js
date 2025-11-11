@@ -102,8 +102,6 @@ const checkoutSession = asyncHandler(async (req, res, next) => {
   const lineItems = cart.cartItems.map((item) => {
     const { product } = item;
 
-    console.log(product);
-
     return {
       price_data: {
         currency: 'egp',
@@ -124,8 +122,8 @@ const checkoutSession = asyncHandler(async (req, res, next) => {
   const session = await stripe.checkout.sessions.create({
     line_items: lineItems,
     mode: 'payment',
-    success_url: `${process.env.FRONTEND_URL}/payment/success`,
-    cancel_url: `${process.env.FRONTEND_URL}/cart`,
+    success_url: `${process.env.FRONTEND_URL_REDIRECT}/payment/success`,
+    cancel_url: `${process.env.FRONTEND_URL_REDIRECT}/cart`,
     customer_email: req.user.email,
     client_reference_id: req.params.cartId,
     metadata: {
